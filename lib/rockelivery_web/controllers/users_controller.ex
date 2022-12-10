@@ -1,10 +1,19 @@
 defmodule RockeliveryWeb.UsersController do
   use RockeliveryWeb, :controller
 
+  alias Rockelivery.Repo
   alias Rockelivery.User
   alias RockeliveryWeb.FallbackController
 
   action_fallback FallbackController
+
+  def index(conn, _params) do
+    with users <- Repo.all(User) do
+      conn
+      |> put_status(:ok)
+      |> render("index.json", users: users)
+    end
+  end
 
   def show(conn, %{"id" => id}) do
     with {:ok, user} <- Rockelivery.get_user_by_id(id) do

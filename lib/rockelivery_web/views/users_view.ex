@@ -3,6 +3,12 @@ defmodule RockeliveryWeb.UsersView do
 
   alias Rockelivery.User
 
+  def render("index.json", %{users: list}) when is_list(list) do
+    %{
+      users: list
+    }
+  end
+
   def render("show.json", %{user: %User{} = user}) do
     %{
       user: user
